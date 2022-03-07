@@ -81,22 +81,25 @@ switch (userSelection) {
         
         break;
 };
-
+    // create the list of randomly placed mines
     listBombs = randomMines(listBombs, 16, numberGridElements);
 
     // cycle that creates a new cell of the grid for "i" times
     for( let i = 1; i <= numberGridElements; i++ ){
 
+        // create a new cell for any cicle
         newGridElement = createNewDiv(gridElement, i);
 
+        // add the dimensions with the style based on the level of the game that is the number of cells
         newGridElement.style = `width: calc((40vw - 1rem) / ${rowGridElements});
         height: calc((40vw - 1rem) / ${rowGridElements});
         line-height: calc((40vw - 1rem) / ${rowGridElements});`
 
+        // check if the cell created is present in the list of randomly placed mines
             if(!(listBombs.includes(i))){
 
                 newGridElement.addEventListener( "click", function() {
-
+                    // at the click of the single cell I check if we have not found any mine yet and therefore the game is not finished and in this case I add the class to color it and increase the points counter
                     if(!flagEndGame){
 
                         this.classList.add("clicked");
@@ -114,7 +117,9 @@ switch (userSelection) {
 
                         this.classList.add("clicked-mine");
                         addToDOM("game-result", `Hai perso!! Hai trovato una mina! Il tuo punteggio finale è: ${counterPoints}`);
-                        flagEndGame = true; 
+                        document.getElementById("game-result").classList.add("text-danger");
+                        flagEndGame = true;
+                        // when I find a mine, I scroll through all the cells created and if these are present in the mine list, I display them by adding the appropriate class
                         let singleElements = document.getElementsByClassName("box");
                         for ( let i = 0; i < singleElements.length; i++){
                             let tempValue = parseInt(singleElements[i].innerHTML);
@@ -128,7 +133,7 @@ switch (userSelection) {
     }
 });
 
-
+// at the click of the reset button, reset everything to restart the game
 buttonReset.addEventListener("click", function(){
 
     resetGameElement.classList.toggle("d-none");
@@ -137,6 +142,7 @@ buttonReset.addEventListener("click", function(){
 
     addToDOM("grid", ``);
     addToDOM("game-result", ``);
+    document.getElementById("game-result").classList.remove("text-danger");
     
 
 });
