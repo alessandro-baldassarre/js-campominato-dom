@@ -42,11 +42,17 @@ gridElementWrapper.classList.toggle("d-none");
 let newGridElement;
 
 const userSelection = document.querySelector("select").value;
+
+let listBombs;
     
 // check the selection that the user has chosen and the program performs certain operations based on it
 switch (userSelection) {
 
     case 'opt-easy':
+
+        listBombs = randomMines(listBombs, 16, 100);
+
+        console.log(listBombs);
         
         // cycle that creates a new cell of the grid for "i" times
         for( let i = 1; i <= 100; i++ ){
@@ -55,12 +61,24 @@ switch (userSelection) {
 
             newGridElement.classList.add("easy-width");
 
-            clicked(newGridElement);
+            if(!(listBombs.includes(i))){
+
+                clicked(newGridElement);
+            }
+            else{
+    
+                clickedMine(newGridElement);
+            }
+            
         }
         
         break;
 
     case 'opt-midd':
+
+        listBombs = randomMines(listBombs, 16, 81);
+
+        console.log(listBombs);
 
         // cycle that creates a new cell of the grid for "i" times
         for( let i = 1; i <= 81; i++ ){
@@ -69,12 +87,24 @@ switch (userSelection) {
 
             newGridElement.classList.add("midd-width");
 
-            clicked(newGridElement);
+            if(!(listBombs.includes(i))){
+
+                clicked(newGridElement);
+            }
+            else{
+    
+                clickedMine(newGridElement);
+            }
+
         }
         
         break;
 
     case 'opt-hard':
+
+        listBombs = randomMines(listBombs, 16, 49);
+
+        console.log(listBombs);
 
         // cycle that creates a new cell of the grid for "i" times
         for( let i = 1; i <= 49; i++ ){
@@ -83,7 +113,14 @@ switch (userSelection) {
 
             newGridElement.classList.add("hard-width");
 
-            clicked(newGridElement);
+            if(!(listBombs.includes(i))){
+
+                clicked(newGridElement);
+            }
+            else{
+    
+                clickedMine(newGridElement);
+            }
         }
         
         break;
@@ -142,3 +179,56 @@ function clicked(domElement){
     });
 
 }
+
+function clickedMine(domElement){
+
+    domElement.addEventListener( "click", function() {
+
+        this.classList.add("clicked-mine");
+
+    });
+
+}
+
+/**
+ * function that generates a random number that is not present in the list given as an argument and that is between a minimum number and a maximum number also passed as arguments
+ * 
+ * @param {*} listUnavailableNumber 
+ * @param {*} min 
+ * @param {*} max 
+ * @returns 
+ */
+
+function randomNumberOnly (listUnavailableNumber,min, max){
+
+    let randomNumber;
+
+    let flag = false;
+
+    while (!flag){
+
+        randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
+
+        if(!(listUnavailableNumber.includes(randomNumber))){
+            flag = true;
+        }
+
+    }
+
+    return randomNumber;
+}
+
+
+function randomMines (listMines, numberMines, numberCells){
+    
+    listMines = [];
+
+    for ( let i = 1; i <= numberMines; i++){
+
+        listMines.push(randomNumberOnly(listMines, 1, numberCells));
+
+    }
+
+    return listMines;
+}
+

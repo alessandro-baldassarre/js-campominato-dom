@@ -51,3 +51,8 @@ header{
     background-color:blue;
     color: white;
 }
+
+.box.clicked-mine{
+    background-color:red;
+    color: white;
+}
