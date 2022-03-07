@@ -84,8 +84,6 @@ switch (userSelection) {
 
     listBombs = randomMines(listBombs, 16, numberGridElements);
 
-    console.log(listBombs);
-
     // cycle that creates a new cell of the grid for "i" times
     for( let i = 1; i <= numberGridElements; i++ ){
 
@@ -117,15 +115,19 @@ switch (userSelection) {
                         this.classList.add("clicked-mine");
                         addToDOM("game-result", `Hai perso!! Hai trovato una mina! Il tuo punteggio finale è: ${counterPoints}`);
                         flagEndGame = true; 
+                        let singleElements = document.getElementsByClassName("box");
+                        for ( let i = 0; i < singleElements.length; i++){
+                            let tempValue = parseInt(singleElements[i].innerHTML);
+                            if(listBombs.includes(tempValue)){
+                                singleElements[i].classList.add("clicked-mine");
+                            }
+                        }  
                     }
                 });
         }
     }
-
-
-
-
 });
+
 
 buttonReset.addEventListener("click", function(){
 
@@ -133,7 +135,7 @@ buttonReset.addEventListener("click", function(){
     preGameElement.classList.toggle("d-none");
     gridElementWrapper.classList.toggle("d-none");
 
-    gridElement.innerHTML = "";
+    addToDOM("grid", ``);
     addToDOM("game-result", ``);
     
 
