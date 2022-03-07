@@ -1,0 +1,53 @@
+
+header{
+    height: 80px;
+}
+
+#wrapper-game-instructions,
+#wrapper-grid-bg
+{
+    height: calc(100vh - 80px);
+}
+
+#wrapper-game-instructions #game-instructions{
+    width: 80%;
+    height: 60%;
+}
+
+#grid-bg{
+    width: 40vw;
+    
+}
+
+#grid{
+    
+}
+
+.box{
+    /* width: calc((40vw - 1rem) / 10);
+    height: calc((40vw - 1rem) / 10); */
+    cursor: crosshair;
+}
+
+.easy-width{
+    width: calc((40vw - 1rem) / 10);
+    height: calc((40vw - 1rem) / 10);
+    line-height: calc((40vw - 1rem) / 10);
+}
+
+.midd-width{
+    width: calc((40vw - 1rem) / 9);
+    height: calc((40vw - 1rem) / 9);
+    line-height: calc((40vw - 1rem) / 9);
+}
+
+.hard-width{
+    width: calc((40vw - 1rem) / 7);
+    height: calc((40vw - 1rem) / 7);
+    line-height: calc((40vw - 1rem) / 7);
+}
+
+.box.clicked{
+    background-color:blue;
+    color: white;
+}
