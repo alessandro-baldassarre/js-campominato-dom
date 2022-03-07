@@ -43,88 +43,78 @@ let newGridElement;
 
 const userSelection = document.querySelector("select").value;
 
+let numberGridElements = 0;
+
+let rowGridElements;
+
 let listBombs;
+
+let counterPoints = 0;
     
 // check the selection that the user has chosen and the program performs certain operations based on it
 switch (userSelection) {
 
+
     case 'opt-easy':
 
-        listBombs = randomMines(listBombs, 16, 100);
+        numberGridElements = 100;
 
-        console.log(listBombs);
-        
-        // cycle that creates a new cell of the grid for "i" times
-        for( let i = 1; i <= 100; i++ ){
-
-            newGridElement = createNewDiv(gridElement, i);
-
-            newGridElement.classList.add("easy-width");
-
-            if(!(listBombs.includes(i))){
-
-                clicked(newGridElement);
-            }
-            else{
-    
-                clickedMine(newGridElement);
-            }
-            
-        }
+        rowGridElements = 10;
         
         break;
 
     case 'opt-midd':
 
-        listBombs = randomMines(listBombs, 16, 81);
+        numberGridElements = 81;
 
-        console.log(listBombs);
-
-        // cycle that creates a new cell of the grid for "i" times
-        for( let i = 1; i <= 81; i++ ){
-
-            newGridElement = createNewDiv(gridElement, i);
-
-            newGridElement.classList.add("midd-width");
-
-            if(!(listBombs.includes(i))){
-
-                clicked(newGridElement);
-            }
-            else{
-    
-                clickedMine(newGridElement);
-            }
-
-        }
+        rowGridElements = 9
         
         break;
 
     case 'opt-hard':
 
-        listBombs = randomMines(listBombs, 16, 49);
+        numberGridElements = 49;
 
-        console.log(listBombs);
-
-        // cycle that creates a new cell of the grid for "i" times
-        for( let i = 1; i <= 49; i++ ){
-
-            newGridElement = createNewDiv(gridElement, i);
-
-            newGridElement.classList.add("hard-width");
-
-            if(!(listBombs.includes(i))){
-
-                clicked(newGridElement);
-            }
-            else{
-    
-                clickedMine(newGridElement);
-            }
-        }
+        rowGridElements = 7;
         
         break;
-}
+};
+
+    listBombs = randomMines(listBombs, 16, numberGridElements);
+
+    console.log(listBombs);
+
+    // cycle that creates a new cell of the grid for "i" times
+    for( let i = 1; i <= numberGridElements; i++ ){
+
+        newGridElement = createNewDiv(gridElement, i);
+
+        newGridElement.style = `width: calc((40vw - 1rem) / ${rowGridElements});
+        height: calc((40vw - 1rem) / ${rowGridElements});
+        line-height: calc((40vw - 1rem) / ${rowGridElements});`
+
+        if(!(listBombs.includes(i))){
+
+            
+            newGridElement.addEventListener( "click", function() {
+
+                this.classList.add("clicked");
+                counterPoints++;
+                addToDOM("game-result", `Il tuo punteggio è: ${counterPoints}`);
+            });
+            
+        }
+        else{
+
+            newGridElement.addEventListener( "click", function() {
+
+                this.classList.add("clicked-mine");
+                addToDOM("game-result", `Hai perso!! Hai trovato una mina! Il tuo punteggio finale è: ${counterPoints}`);
+            });
+        }
+    }
+
+
 
 });
 
@@ -164,31 +154,6 @@ function createNewDiv(domElement, innerElement){
 
 }
 
-/**
- * function that given in input an element of the DOM if it is clicked adds the attached class
- * 
- * @param {*} element 
- */
-
-function clicked(domElement){
-
-    domElement.addEventListener( "click", function() {
-
-        this.classList.add("clicked");
-
-    });
-
-}
-
-function clickedMine(domElement){
-
-    domElement.addEventListener( "click", function() {
-
-        this.classList.add("clicked-mine");
-
-    });
-
-}
 
 /**
  * function that generates a random number that is not present in the list given as an argument and that is between a minimum number and a maximum number also passed as arguments
@@ -218,6 +183,14 @@ function randomNumberOnly (listUnavailableNumber,min, max){
     return randomNumber;
 }
 
+/**
+ * function that generates a random numbers that is not present in the list given as an argument and that is between a minimum number and a maximum number also passed as arguments and and adds them to the list
+ * 
+ * @param {*} listMines 
+ * @param {*} numberMines 
+ * @param {*} numberCells 
+ * @returns 
+ */
 
 function randomMines (listMines, numberMines, numberCells){
     
@@ -230,5 +203,17 @@ function randomMines (listMines, numberMines, numberCells){
     }
 
     return listMines;
+}
+
+/**
+ * function that adds a value passed by argument to an element of the dom with id also passed by argument
+ * 
+ * @param {*} elementId 
+ * @param {*} valueToAdd 
+ */
+
+function addToDOM (elementId, valueToAdd){
+    
+    document.getElementById(elementId).innerHTML = valueToAdd;
 }
 

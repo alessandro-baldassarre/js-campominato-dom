@@ -6,7 +6,7 @@ header{
 #wrapper-game-instructions,
 #wrapper-grid-bg
 {
-    height: calc(100vh - 80px);
+    height: calc(100vh - 160px);
 }
 
 #wrapper-game-instructions #game-instructions{
@@ -23,28 +23,13 @@ header{
     
 }
 
+#game-result{
+    height: 80px;
+}
+
 .box{
-    /* width: calc((40vw - 1rem) / 10);
-    height: calc((40vw - 1rem) / 10); */
+
     cursor: crosshair;
-}
-
-.easy-width{
-    width: calc((40vw - 1rem) / 10);
-    height: calc((40vw - 1rem) / 10);
-    line-height: calc((40vw - 1rem) / 10);
-}
-
-.midd-width{
-    width: calc((40vw - 1rem) / 9);
-    height: calc((40vw - 1rem) / 9);
-    line-height: calc((40vw - 1rem) / 9);
-}
-
-.hard-width{
-    width: calc((40vw - 1rem) / 7);
-    height: calc((40vw - 1rem) / 7);
-    line-height: calc((40vw - 1rem) / 7);
 }
 
 .box.clicked{
