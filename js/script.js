@@ -50,6 +50,8 @@ let rowGridElements;
 let listBombs;
 
 let counterPoints = 0;
+
+let flagEndGame = false;
     
 // check the selection that the user has chosen and the program performs certain operations based on it
 switch (userSelection) {
@@ -93,26 +95,33 @@ switch (userSelection) {
         height: calc((40vw - 1rem) / ${rowGridElements});
         line-height: calc((40vw - 1rem) / ${rowGridElements});`
 
-        if(!(listBombs.includes(i))){
+            if(!(listBombs.includes(i))){
 
-            
-            newGridElement.addEventListener( "click", function() {
+                newGridElement.addEventListener( "click", function() {
 
-                this.classList.add("clicked");
-                counterPoints++;
-                addToDOM("game-result", `Il tuo punteggio è: ${counterPoints}`);
-            });
-            
-        }
-        else{
+                    if(!flagEndGame){
 
-            newGridElement.addEventListener( "click", function() {
+                        this.classList.add("clicked");
+                        counterPoints++;
+                        addToDOM("game-result", `Il tuo punteggio è: ${counterPoints}`);
+                    }
+                });
+                
+            }
+            else{
 
-                this.classList.add("clicked-mine");
-                addToDOM("game-result", `Hai perso!! Hai trovato una mina! Il tuo punteggio finale è: ${counterPoints}`);
-            });
+                newGridElement.addEventListener( "click", function() {
+
+                    if(!flagEndGame){
+
+                        this.classList.add("clicked-mine");
+                        addToDOM("game-result", `Hai perso!! Hai trovato una mina! Il tuo punteggio finale è: ${counterPoints}`);
+                        flagEndGame = true; 
+                    }
+                });
         }
     }
+
 
 
 
@@ -124,8 +133,9 @@ buttonReset.addEventListener("click", function(){
     preGameElement.classList.toggle("d-none");
     gridElementWrapper.classList.toggle("d-none");
 
-
     gridElement.innerHTML = "";
+    addToDOM("game-result", ``);
+    
 
 });
 
